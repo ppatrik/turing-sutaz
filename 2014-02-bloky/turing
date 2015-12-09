@@ -1,0 +1,111 @@
+s0 0 1 R s1
+
+# posun A bloku o 2 bloky dalej
+s1 1 0 R s2
+# prejem cez prvy blok
+s2 1 1 R s2
+s2 0 0 R s3
+# prejdem cez druhy blok
+s3 1 1 R s3
+s3 0 0 R s4
+# prejdem cez treti blok
+s4 1 1 R s4
+s4 0 0 R s5
+# prejdem cez vytvarany blok
+s5 1 1 R s5
+s5 0 1 L s6
+# vratim sa cez vytvarany
+s6 1 1 L s6
+s6 0 0 L s7
+# vratim sa cez treti
+s7 1 1 L s7
+s7 0 0 L s8
+# vratim sa cez druhy
+s8 1 1 L s8
+s8 0 0 L s9
+# vratim sa cez prvy
+s9 1 1 L s9
+s9 0 0 R s1
+
+# prechod na kopirovannie B bloku
+s1 0 0 R s11
+
+# posun B bloku o 2 bloky dalej (to iste co A len stavy +10)
+s11 1 0 R s12
+# prejem cez prvy blok
+s12 1 1 R s12
+s12 0 0 R s13
+# prejdem cez druhy blok
+s13 1 1 R s13
+s13 0 0 R s14
+# prejdem cez treti blok
+s14 1 1 R s14
+s14 0 0 R s15
+# prejdem cez vytvarany blok
+s15 1 1 R s15
+s15 0 1 L s16
+# vratim sa cez vytvarany
+s16 1 1 L s16
+s16 0 0 L s17
+# vratim sa cez treti
+s17 1 1 L s17
+s17 0 0 L s18
+# vratim sa cez druhy
+s18 1 1 L s18
+s18 0 0 L s19
+# vratim sa cez prvy
+s19 1 1 L s19
+s19 0 0 R s11
+
+# todo: cele to este treba posunut dolava
+
+# presun vysledku na zaciatok
+
+# vratim sa ku nule co som si nechal na zaciatku
+s11 0 0 L s21
+s21 0 0 L s21
+s21 1 0 R s22
+
+# som na indexe 1 na páske, vlozim tam jednotku a prisuniem k nej dalsie jednotky
+# cyklus
+s22 0 1 R s23 # vlozim jednotku
+s23 0 0 R s23 # prejdem doprava
+s23 1 1 R s24 # prisiel som ku jednotkam v pravo
+s24 1 1 L s25 # ak je ich viac ako 2
+s25 1 0 L s26 # tak prvu zmazemm
+s26 0 0 L s26 # vratim sa na zaciatok
+s26 1 1 R s22 # ak ich bolo viac ako 2 tak cyklus
+
+# ak bola len jedna jednotka zmazeme ju vpravo
+s24 0 0 L s30
+s30 1 0 L s31 # zmazem tu jednu jednotku vpravo
+s31 0 0 L s31 # prejdem vlavo
+s31 1 1 R s32 # ak som na jednotkach
+s32 0 0 R s33 # tak spravim jednu medzeru
+# cyklus
+s33 0 1 R s34 # a vlozim jednotku
+s34 0 0 R s34 # prejdem v pravo
+s34 1 1 R s35 # prisiel som ku jednotkam vpravo
+s35 1 1 L s36 # ak je ich viac ako 2
+s36 1 0 L s37 # tak prvu zmazem
+s37 0 0 L s37 # vratim sa na zaciatok
+s37 1 1 R s33 # ak ich bolo viac ako 2 tak cyklus
+
+# ak bola len jedna jednotka
+s35 0 0 L s40
+s40 1 0 L s41 # zmazem tu jednu jednotku vpravo
+s41 0 0 L s41 # prejdem vlavo
+s41 1 1 R s42 # ak som na jednotkach
+s42 0 0 R s43 # tak spravim jednu medzeru
+# cyklus
+s43 0 1 R s44 # a vlozim jednotku
+s44 0 0 R s44 # prejdem v pravo
+s44 1 1 R s45 # prisiel som ku jednotkam vpravo
+s45 1 1 L s46 # ak je ich viac ako 2
+s46 1 0 L s47 # tak prvu zmazem
+s47 0 0 L s47 # vratim sa na zaciatok
+s47 1 1 R s43 # ak ich bolo viac ako 2 tak cyklus
+
+# ak bola len jedna jednotka
+s45 0 0 L s50
+s50 1 0 L s51 # zmazem tu jednu jednotku vpravo

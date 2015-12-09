@@ -1,0 +1,48 @@
+s0 0 0 R s1
+# prekopirovanie prvkov z x
+
+# vyberiem prvok z x zamenim za nulu
+s1 1 0 R s2
+# prejdem cez x
+s2 1 1 R s2
+s2 0 0 R s3
+# prejdem cez y
+s3 1 1 R s3
+s3 0 0 R s4
+# prejdem cez z
+s4 1 1 R s4
+# zapisem prenasanu jednotku
+s4 0 1 L s5
+# vratim sa späť
+# prejdem cez z
+s5 1 1 L s5
+s5 0 0 L s6
+# prejdem cez y
+s6 1 1 L s6
+s6 0 0 L s7
+# prejdem cez x
+s7 1 1 L s7
+s7 0 1 R s1
+
+# ideme teraz kopirovat y
+s1 0 0 R s10
+s10 1 0 R s11
+# prejdem cez y
+s11 1 1 R s11
+s11 0 0 R s12
+# prejdem cez z
+s12 1 1 R s12
+s12 0 1 L s13
+
+# idem spat cez z
+s13 1 1 L s13
+s13 0 0 L s14
+# idem spat cez y
+s14 1 1 L s14
+s14 0 1 R s10
+
+# vyhodenie poslednej jednotky kvoli kodovaniu tam mame 2 jednotky
+s10 0 0 R s20
+s20 1 1 R s20
+s20 0 0 L s21
+s21 1 0 N s22
