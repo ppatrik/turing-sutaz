@@ -1,0 +1,129 @@
+s0 0 0 R s1
+
+# ako prve prekopirujeme B za C
+
+# prejdenie cez A
+s1 1 1 R s1
+s1 0 0 R s2
+
+# kopirovanie bloku B za blok C
+s2 1 0 R s3
+s3 1 1 R s3 # prejdenie cez zvysok B
+s3 0 0 R s4 # preskocenie na C
+s4 1 1 R s4 # prejdenie cez C
+s4 0 0 R s5 # preskocenie na kopirovane B
+s5 1 1 R s5 # prejdenie cez kopirovane B
+s5 0 1 L s6 # zapisanie jednotky a vracenie sa späť
+s6 1 1 L s6 # prejdenie cez kopirovane B
+s6 0 0 L s7 # preskocenie ku C
+s7 1 1 L s7 # prejdenie cez C
+s7 0 0 L s8 # preskocenie na B
+s8 1 1 L s8 # prejdenie cez B
+s8 0 0 R s2 # cyklus kopirovania B
+
+# prejdenie na zaciatok aby sme mohli kopirovat A
+s2 0 0 L s9
+s9 0 0 L s9
+s9 1 1 L s10
+s10 1 1 L s10
+
+# kopirovanie bloku A na koniec
+s10 0 1 R s20
+s20 1 0 R s21
+
+# instrukcie ak to nebola posledna jednotka
+s21 1 1 R s22
+s22 1 1 R s22 # prejdenie cez zvysok A
+s22 0 0 R s23 # posun na nuly
+s23 0 0 R s23 # prejdenie cez nuly
+s23 1 1 R s24 # prejdenie na jednotky C
+s24 1 1 R s24 # prejdenie cez C
+s24 0 0 R s25 # prechod na B
+s25 1 1 R s25 # prejdenie cez B
+s25 0 0 R s26 # prechod na kopirovane A
+s26 1 1 R s26 # prejdenie cez kopirovane A
+s26 0 1 L s27 # pridanie jednotky na koniec
+# späť
+s27 1 1 L s27 # prejdenie cez kopirovane A
+s27 0 0 L s28 # prechod na B
+s28 1 1 L s28 # prejdenie cez B
+s28 0 0 L s29 # prechod na C
+s29 1 1 L s29 # prejdenie cez C
+s29 0 0 L s30 # prejdenie na nuly
+s30 0 0 L s30 # prejdenie ku koncu A
+s30 1 1 L s31 # prisli sme ku A a posunieme sa na predposlednu jednotku
+s31 1 1 L s31 # prejdenie cez A
+s31 0 0 R s20
+
+# instrukcie ak to bola posledna jednotka
+s21 0 0 R s42
+s42 1 1 R s42 # prejdenie cez zvysok A
+s42 0 0 R s43 # posun na nuly
+s43 0 0 R s43 # prejdenie cez nuly
+s43 1 1 R s44 # prejdenie na jednotky C
+s44 1 1 R s44 # prejdenie cez C
+s44 0 0 R s45 # prechod na B
+s45 1 1 R s45 # prejdenie cez B
+s45 0 0 R s46 # prechod na kopirovane A
+s46 1 1 R s46 # prejdenie cez kopirovane A
+s46 0 1 L s47 # pridanie jednotky na koniec
+
+# todo: cele to este treba posunut dolava
+
+# presun vysledku na zaciatok
+
+# vratim sa ku nule co som si nechal na zaciatku
+s47 1 1 L s47 # prejdenie cez kopirovane A
+s47 0 0 L s48 # prechod na B
+s48 1 1 L s48 # prejdenie cez B
+s48 0 0 L s49 # prechod na C
+s49 1 1 L s49 # prejdenie cez C
+s49 0 0 L s50
+s50 0 0 L s50
+s50 1 0 R s122
+
+# som na indexe 1 na páske, vlozim tam jednotku a prisuniem k nej dalsie jednotky
+# cyklus
+s122 0 1 R s123 # vlozimjednotku
+s123 0 0 R s123 # prejdemdoprava
+s123 1 1 R s124 # prisiel som ku jednotkam vpravo
+s124 1 1 L s125 # ak je ich viac ako2
+s125 1 0 L s126 # tak prvuzmazemm
+s126 0 0 L s126 # vratim sa nazaciatok
+s126 1 1 R s122 # ak ich bolo viac ako 2 takcyklus
+
+# ak bola len jedna jednotka zmazeme ju vpravo
+s124 0 0 L s130
+s130 1 0 L s131 # zmazem tu jednu jednotkuvpravo
+s131 0 0 L s131 # prejdemvlavo
+s131 1 1 R s132 # ak som najednotkach
+s132 0 0 R s133 # tak spravim jednumedzeru
+# cyklus
+s133 0 1 R s134 # a vlozimjednotku
+s134 0 0 R s134 # prejdem vpravo
+s134 1 1 R s135 # prisiel som ku jednotkamvpravo
+s135 1 1 L s136 # ak je ich viac ako2
+s136 1 0 L s137 # tak prvuzmazem
+s137 0 0 L s137 # vratim sa nazaciatok
+s137 1 1 R s133 # ak ich bolo viac ako 2 takcyklus
+
+# ak bola len jedna jednotka
+s135 0 0 L s140
+s140 1 0 L s141 # zmazem tu jednu jednotkuvpravo
+s141 0 0 L s141 # prejdemvlavo
+s141 1 1 R s142 # ak som najednotkach
+s142 0 0 R s143 # tak spravim jednumedzeru
+# cyklus
+s143 0 1 R s144 # a vlozimjednotku
+s144 0 0 R s144 # prejdem vpravo
+s144 1 1 R s145 # prisiel som ku jednotkamvpravo
+s145 1 1 L s146 # ak je ich viac ako2
+s146 1 0 L s147 # tak prvuzmazem
+s147 0 0 L s147 # vratim sa nazaciatok
+s147 1 1 R s143 # ak ich bolo viac ako 2 takcyklus
+
+# ak bola len jedna jednotka
+s145 0 0 L s150
+s150 1 0 L s151 # zmazem tu jednu jednotkuvpravo
+
+
